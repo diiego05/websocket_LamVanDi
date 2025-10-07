@@ -3,7 +3,7 @@ FROM maven:3.9.5-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copy từ thư mục websocket
-COPY websocket/pom.xml ./
+COPY pom.xml ./
 COPY websocket/.mvn ./.mvn
 COPY websocket/mvnw ./
 COPY websocket/mvnw.cmd ./
