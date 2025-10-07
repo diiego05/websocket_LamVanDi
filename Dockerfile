@@ -1,22 +1,24 @@
-# Stage 1: Build
 FROM maven:3.9.5-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
-# Copy pom.xml từ thư mục websocket
-COPY websocket/pom.xml .
-COPY websocket/.mvn .mvn
-COPY websocket/mvnw .
-COPY websocket/mvnw.cmd .
+# Copy từ thư mục websocket
+COPY websocket/pom.xml ./
+COPY websocket/.mvn ./.mvn
+COPY websocket/mvnw ./
+COPY websocket/mvnw.cmd ./
+
+# Cấp quyền thực thi cho mvnw
+RUN chmod +x ./mvnw
 
 # Download dependencies
-RUN mvn dependency:go-offline -B
+RUN ./mvnw dependency:go-offline -B
 
 # Copy source code từ websocket/src
 COPY websocket/src ./src
 
 # Build application
-RUN mvn clean package -DskipTests
+RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Run
 FROM eclipse-temurin:17-jre-jammy
@@ -29,7 +31,7 @@ COPY --from=build /app/target/*.jar app.jar
 # Expose port
 EXPOSE 8080
 
-# Environment variable cho port
+# Environment variable
 ENV PORT=8080
 
 # Run application
