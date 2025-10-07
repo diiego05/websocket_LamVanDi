@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat - Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-box">
+            <h1>🚀 WebSocket Chat Application</h1>
+            <p>Chào mừng đến với ứng dụng chat real-time sử dụng WebSocket!</p>
+
+            <div class="username-page">
+                <div class="username-page-container">
+                    <h2>Nhập tên của bạn</h2>
+                    <form id="usernameForm" name="usernameForm">
+                        <div class="form-group">
+                            <input type="text"
+                                   id="name"
+                                   placeholder="Username"
+                                   autocomplete="off"
+                                   class="form-control"
+                                   required />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary">
+                                Vào Chat Room →
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('usernameForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('name').value.trim();
+            if(username) {
+                sessionStorage.setItem('username', username);
+                window.location.href = '/chat';
+            }
+        });
+    </script>
+</body>
+</html>
